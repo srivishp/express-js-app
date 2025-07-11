@@ -1,5 +1,5 @@
 //const http = require("http");
-
+const bodyParser = require("body-parser");
 const express = require("express");
 
 const app = express();
@@ -11,13 +11,23 @@ const app = express();
 //?   as it directs the flow of the processing of the requests.
 //#   The requests flow top-down like a funnel so we have to add new middlewares at the top (generally)
 
+// Adding the body-parser middleware to parse incoming requests
+app.use(bodyParser.urlencoded());
+
 //* Adding a route in app.use()
 app.use("/add-product", (req, res, next) => {
   console.log("In the first middleware");
-  res.send("<h1>The Product Page</h1>");
+  res.send(
+    "<form action='/product' method='POST'><input type='text' name='title'><button type='submit'>Add Product</button></form>"
+  );
 
   // next() is required for the execution to move forward into the next middleware
   //next();
+});
+
+app.use("/product", (req, res, next) => {
+  console.log(req.body);
+  res.redirect("/");
 });
 
 app.use("/", (req, res, next) => {
