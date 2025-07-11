@@ -1,4 +1,4 @@
-const http = require("http");
+//const http = require("http");
 
 const express = require("express");
 
@@ -6,20 +6,31 @@ const app = express();
 // Creating middlewares
 //*Middleware functions intercept incoming requests and outgoing responses.
 // Used to breakdown code into smaller chunks(functions) for easier management
-console.log("Outside the middleware!");
-app.use((req, res, next) => {
-  console.log("In the first middleware!");
+
+//?   The order of middlewares & usage of next() is very important,
+//?   as it directs the flow of the processing of the requests.
+//#   The requests flow top-down like a funnel so we have to add new middlewares at the top (generally)
+
+//* Adding a route in app.use()
+app.use("/add-product", (req, res, next) => {
+  console.log("In the first middleware");
+  res.send("<h1>The Product Page</h1>");
+
   // next() is required for the execution to move forward into the next middleware
-  next();
+  //next();
 });
-app.use((req, res, next) => {
+
+app.use("/", (req, res, next) => {
   console.log("In the second middleware!");
   // Sending the response
   // res.send() is exclusive to ExpressJS
   //* res.send() = res.write() + res.end()
   res.send("<h1>Hello, from Express JS!</h1>");
 });
-// Passing app to create the server as it is a valid handler.
-const server = http.createServer(app);
+// // Passing app to create the server as it is a valid handler.
+// const server = http.createServer(app);
+// server.listen(3000);
 
-server.listen(3000);
+//# Express JS already creates the server so we don't have to.
+//# So we simply write app.listen(<port-numbe>)
+app.listen(3000);
