@@ -19,7 +19,9 @@ const app = express();
 app.use(bodyParser.urlencoded());
 
 // Using the Express Router routes
-app.use(adminRoutes);
+// Filtering the paths
+//* Only the paths starting with /admin will enter the adminRoutes
+app.use("/admin", adminRoutes);
 app.use(shopRoutes);
 
 app.use((req, res, next) => {
