@@ -22,6 +22,10 @@ app.use(bodyParser.urlencoded());
 app.use(adminRoutes);
 app.use(shopRoutes);
 
+app.use((req, res, next) => {
+  res.status(404).send("<h1>Page not found</h1>");
+});
+
 // // Passing app to create the server as it is a valid handler.
 // const server = http.createServer(app);
 // server.listen(3000);
