@@ -25,7 +25,10 @@ app.use("/add-product", (req, res, next) => {
   //next();
 });
 
-app.use("/product", (req, res, next) => {
+// app.use is executed for all requests
+// app.get is executed only for GET requests
+// app.post is executed only for POST requests
+app.post("/product", (req, res, next) => {
   console.log(req.body);
   res.redirect("/");
 });
