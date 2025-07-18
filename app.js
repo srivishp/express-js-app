@@ -2,6 +2,10 @@
 const bodyParser = require("body-parser");
 const express = require("express");
 
+// Importing routes via Express Router
+const adminRoutes = require("./routes/admin");
+const shopRoutes = require("./routes/shop");
+
 const app = express();
 // Creating middlewares
 //*Middleware functions intercept incoming requests and outgoing responses.
@@ -14,32 +18,10 @@ const app = express();
 // Adding the body-parser middleware to parse incoming requests
 app.use(bodyParser.urlencoded());
 
-//* Adding a route in app.use()
-app.use("/add-product", (req, res, next) => {
-  console.log("In the first middleware");
-  res.send(
-    "<form action='/product' method='POST'><input type='text' name='title'><button type='submit'>Add Product</button></form>"
-  );
+// Using the Express Router routes
+app.use(adminRoutes);
+app.use(shopRoutes);
 
-  // next() is required for the execution to move forward into the next middleware
-  //next();
-});
-
-// app.use is executed for all requests
-// app.get is executed only for GET requests
-// app.post is executed only for POST requests
-app.post("/product", (req, res, next) => {
-  console.log(req.body);
-  res.redirect("/");
-});
-
-app.use("/", (req, res, next) => {
-  console.log("In the second middleware!");
-  // Sending the response
-  // res.send() is exclusive to ExpressJS
-  //* res.send() = res.write() + res.end()
-  res.send("<h1>Hello, from Express JS!</h1>");
-});
 // // Passing app to create the server as it is a valid handler.
 // const server = http.createServer(app);
 // server.listen(3000);
