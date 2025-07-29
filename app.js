@@ -18,6 +18,9 @@ const app = express();
 
 // Adding the body-parser middleware to parse incoming requests
 app.use(bodyParser.urlencoded());
+// Adding the static middleware to serve static files
+//*   This middleware serves files from the public directory, so that the user can access them
+app.use(express.static(path.join(__dirname, "public")));
 
 // Using the Express Router routes
 // Filtering the paths
