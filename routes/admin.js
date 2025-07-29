@@ -1,13 +1,15 @@
 const path = require("path");
 const express = require("express");
 const router = express.Router();
+const rootDir = require("../util/path");
 
 //* Adding a route in app.use()
 router.get("/add-product", (req, res, next) => {
   console.log("In the first middleware");
   // __dirname sets the root directory to be the root of the project
   // path.join() builds a path that runs on both Windows and Linux file systems
-  res.sendFile(path.join(__dirname, "../", "views", "add-product.html"));
+  // But, we can use a helper function to get the root directory
+  res.sendFile(path.join(rootDir, "views", "add-product.html"));
 
   // next() is required for the execution to move forward into the next middleware
   //next();
